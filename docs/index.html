@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiChess</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+</head>
+<body>
+    <h1>Welcome to WikiChess!</h1>
+    <p>Click the button below to start playing. Your goal is to reach a set topic on Wikipedia using as few URL clicks as possible.</p>
+    <button hx-get="/start_game" hx-target="#wiki-content">Start Game</button>
+    <div id="wiki-content"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to handle the click event on the Start Game button
+            function startGame() {
+                fetch('/start_game')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('wiki-content').innerHTML = data;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // Add click event listener to the Start Game button
+            document.querySelector('button').addEventListener('click', startGame);
+        });
+    </script>
+</body>
+</html>
